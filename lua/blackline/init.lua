@@ -14,14 +14,17 @@ M.setup = function(opts) -- call after color scheme is activated!
 
 	]]--
 	local cl = util.get_cursorline() -- current setting
-	M._icolor = (opts and opts.icolor) or cl
-	M._ncolor = (opts and opts.ncolor) or cl
+	M._i_from_colorscheme = not opts or not opts.icolor
+	M._n_from_colorscheme = not opts or not opts.ncolor
+	M._icolor = M._i_from_colorscheme and cl or opts.icolor
+	M._ncolor = M._n_from_colorscheme and cl or opts.ncolor
 
-	local cursorlineGrp = vim.api.nvim_create_augroup("BlackLine", { clear = true })
+	-- set autocmds for InsertEnter and InsertLeave
+	local insGrp = vim.api.nvim_create_augroup("BlackLine_ins", { clear = true })
 	vim.api.nvim_create_autocmd(
 		"InsertEnter",
 		{
-			group = cursorlineGrp,
+			group = insGrp,
 			callback = function()
 				util.set_cursorline(M._icolor)
 			end
@@ -30,12 +33,27 @@ M.setup = function(opts) -- call after color scheme is activated!
 	vim.api.nvim_create_autocmd(
 		"InsertLeave",
 		{
-			group = cursorlineGrp,
+			group = insGrp,
 			callback = function()
 				util.set_cursorline(M._ncolor)
 			end
 		}
 	)
+
+	-- set autocmd for ColorScheme
+	local colschGrp = vim.api.nvim_create_augroup("BlackLine_colsch", { clear = true })
+	vim.api.nvim_create_autocmd(
+		"ColorScheme",
+		{
+			group = colschGrp,
+			callback = function()
+				local cl = util.get_cursorline() -- current setting
+				M._icolor = M._i_from_colorscheme and cl or M._icolor
+				M._ncolor = M._n_from_colorscheme and cl or N._ncolor
+			end
+		}
+	)
+
 end
 
 return M
