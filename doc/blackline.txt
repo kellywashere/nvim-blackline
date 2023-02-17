@@ -1,0 +1,30 @@
+==============================================================================
+
+INTRODUCTION                                                  *nvim-blackline*
+
+Nvim-blackline is a plugin that allows to specify two different colors for the
+CursorLine: one for normal mode, and another for insert mode.
+
+USAGE                                                     *blackline.settings*
+
+In your nvim configuration, put
+>
+require('blackline').setup({opts})
+<
+opts can have the following fields:
+	icolor:
+		color of CursorLine in insertmode
+		default: the color from the current color scheme
+	ncolor:
+		color of CursorLine in normal mode
+		default: the color from the current color scheme
+
+example: >
+require('blackline').setup( { icolor = 'Black' } )
+<
+Here in normal mode, ColorLine color is taken from the color scheme. In insert
+mode, the CursorLine will be black instead.
+>
+require('blackline').setup( {icolor = '#000040', ncolor = '#0000d0'})
+<
+ vim:tw=78:ts=8:ft=help:norl:
