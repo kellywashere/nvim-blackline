@@ -35,7 +35,8 @@ require('blackline').setup( { icolor = 'Black' } )
 In this example, in normal mode ColorLine color is taken from the color scheme; in insert
 mode, the CursorLine will be black instead.
 
-Another example makes the CursorLine color dark blue in inert mode, and brighter blue in normal mode:
+Another example makes the CursorLine color dark blue in inert mode, and brighter blue in
+normal mode:
 ```
 require('blackline').setup( {icolor = '#000040', ncolor = '#0000d0'})
 ```
