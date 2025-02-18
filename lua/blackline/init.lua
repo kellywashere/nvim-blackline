@@ -18,6 +18,7 @@ M.setup = function(opts) -- call after color scheme is activated!
 	M._n_from_colorscheme = not opts or not opts.ncolor
 	M._icolor = M._i_from_colorscheme and cl or opts.icolor
 	M._ncolor = M._n_from_colorscheme and cl or opts.ncolor
+	util.set_cursorline(M._ncolor)
 
 	-- set autocmds for InsertEnter and InsertLeave
 	local insGrp = vim.api.nvim_create_augroup("BlackLine_ins", { clear = true })
@@ -50,6 +51,7 @@ M.setup = function(opts) -- call after color scheme is activated!
 				local cl = util.get_cursorline() -- current setting
 				M._icolor = M._i_from_colorscheme and cl or M._icolor
 				M._ncolor = M._n_from_colorscheme and cl or N._ncolor
+				util.set_cursorline(M._ncolor)
 			end
 		}
 	)
